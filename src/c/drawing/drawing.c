@@ -3,6 +3,7 @@
 #include "../main.h"
 
 #define PBL_IS_ROUND PBL_IF_ROUND_ELSE(true, false)
+#define PBL_IS_COLOR PBL_IF_COLOR_ELSE(true, false)
 
 static char hour_char[] = "hh";
 static char min_char[] = "mm";
