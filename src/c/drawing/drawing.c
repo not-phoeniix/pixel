@@ -231,33 +231,26 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 static void draw_time(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_unobstructed_bounds(layer);
 
-    int hour1;
-    int hour2;
-    int min1;
-    int min2;
+    int hour2 = hour % 10;
+    int hour1 = (hour - hour2) / 10;
+    int min2 = min % 10;
+    int min1 = (min - min2) / 10;
 
-    draw_number(0, 3, 10, GColorRed, bounds, ctx);
-    draw_number(0, 2, 10, GColorWhite, bounds, ctx);
+    draw_number(hour1, 3, 10, GColorRed, bounds, ctx);
+    draw_number(hour1, 2, 10, GColorWhite, bounds, ctx);
 
-    draw_number(1, 8, 10, GColorRed, bounds, ctx);
-    draw_number(1, 7, 10, GColorWhite, bounds, ctx);
+    draw_number(hour2, 8, 10, GColorRed, bounds, ctx);
+    draw_number(hour2, 7, 10, GColorWhite, bounds, ctx);
 
-    draw_number(3, 14, 10, GColorRed, bounds, ctx);
-    draw_number(3, 13, 10, GColorWhite, bounds, ctx);
+    draw_number(min1, 14, 10, GColorRed, bounds, ctx);
+    draw_number(min1, 13, 10, GColorWhite, bounds, ctx);
 
-    draw_number(9, 19, 10, GColorRed, bounds, ctx);
-    draw_number(9, 18, 10, GColorWhite, bounds, ctx);
-}
-
-static void test_numbers(Layer *layer, GContext *ctx) {
+    draw_number(min2, 19, 10, GColorRed, bounds, ctx);
+    draw_number(min2, 18, 10, GColorWhite, bounds, ctx);
 }
 
 // update procs =====================================================
 
 void time_update_proc(Layer *layer, GContext *ctx) {
     draw_time(layer, ctx);
-}
-
-void num_test_proc(Layer *layer, GContext *ctx) {
-    test_numbers(layer, ctx);
 }

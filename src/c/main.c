@@ -30,7 +30,7 @@ static void main_window_load(Window *window) {
     GRect full_bounds = layer_get_bounds(window_layer);
 
     time_layer = layer_create(full_bounds);
-    layer_set_update_proc(time_layer, num_test_proc);
+    layer_set_update_proc(time_layer, time_update_proc);
     layer_add_child(window_layer, time_layer);
 
     update_stuff();
