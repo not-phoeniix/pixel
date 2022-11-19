@@ -2,7 +2,7 @@
 #include <pebble.h>
 #include "../main.h"
 
-#define PBL_ROUND PBL_IF_ROUND_ELSE(true, false)
+#define PBL_IS_ROUND PBL_IF_ROUND_ELSE(true, false)
 
 static char hour_char[] = "hh";
 static char min_char[] = "mm";
@@ -58,13 +58,13 @@ static void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx) 
 /// @param ctx context thinfy
 
 static void draw_number(int number, int x_offset, int y_offset, GColor color, GRect bounds, GContext *ctx) {
-    int num_array[28];
+    int *num_array;
 
     switch(number) {
         
         // ONE
         case 1:
-            int number[] = {
+            num_array = (int[28]) {
                 0, 1, 1, 1,
                 0, 1, 1, 1,
                 0, 0, 1, 1,
@@ -73,16 +73,12 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 0, 0, 1, 1,
                 0, 0, 1, 1
             };
-
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
 
             break;
 
         // TWO
         case 2:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 1, 1,
@@ -92,15 +88,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 1, 1, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // THREE
         case 3:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 1, 1,
@@ -110,15 +102,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 1, 1, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // FOUR
         case 4:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 0, 1, 1,
                 1, 0, 1, 1,
                 1, 1, 1, 1,
@@ -128,15 +116,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 0, 0, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
         
         // FIVE
         case 5:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 1, 0, 0,
@@ -146,15 +130,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 1, 1, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // SIX
         case 6:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 1, 0, 0,
@@ -164,15 +144,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 1, 1, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // SEVEN
         case 7:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 1, 1,
@@ -182,15 +158,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 0, 1, 1, 0
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // EIGHT
         case 8:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 0, 0, 1,
@@ -200,15 +172,11 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 1, 1, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // NINE
         case 9:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 0, 1, 1,
@@ -218,36 +186,34 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
                 0, 0, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
 
         // ZERO
         default:
-            int number[] = {
+            num_array = (int[28]) {
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 0, 0, 1,
-                1, 1, 1, 1,
+                1, 0, 0, 1,
                 1, 0, 0, 1,
                 1, 1, 1, 1,
                 1, 1, 1, 1
             };
 
-            for(int i = 0; i < 28; i++) {
-                num_array[i] = number[i];
-            }
-
             break;
     }
+
+    int iteration = 0;
 
     // draws each row iteration, top down
     for(int h = 0; h < 7; h++) {
         // draws each row things, left to right
         for(int w = 0; w < 4; w++) {
-            draw_pixel(x_offset + w, y_offset + h, color, bounds, ctx);
+            if(num_array[iteration] == 1) {
+                draw_pixel(x_offset + w, y_offset + h, color, bounds, ctx);
+            }
+
+            iteration++;
         }
     }
 }
@@ -273,7 +239,17 @@ static void draw_time(Layer *layer, GContext *ctx) {
 static void test_numbers(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    draw_number(0, 0, 0, GColorWhite, ctx, bounds);
+    draw_number(0, 0, 3, GColorWhite, bounds, ctx);
+    draw_number(1, 5, 3, GColorWhite, bounds, ctx);
+    draw_number(2, 10, 3, GColorWhite, bounds, ctx);
+    draw_number(3, 15, 3, GColorWhite, bounds, ctx);
+    draw_number(4, 20, 3, GColorWhite, bounds, ctx);
+
+    draw_number(5, 0, 12, GColorWhite, bounds, ctx);
+    draw_number(6, 5, 12, GColorWhite, bounds, ctx);
+    draw_number(7, 10, 12, GColorWhite, bounds, ctx);
+    draw_number(8, 15, 12, GColorWhite, bounds, ctx);
+    draw_number(9, 20, 12, GColorWhite, bounds, ctx);
 }
 
 // update procs =====================================================
