@@ -239,17 +239,17 @@ static void draw_time(Layer *layer, GContext *ctx) {
 static void test_numbers(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    draw_number(0, 0, 3, GColorWhite, bounds, ctx);
-    draw_number(1, 5, 3, GColorWhite, bounds, ctx);
-    draw_number(2, 10, 3, GColorWhite, bounds, ctx);
-    draw_number(3, 15, 3, GColorWhite, bounds, ctx);
-    draw_number(4, 20, 3, GColorWhite, bounds, ctx);
+    draw_number(0, 3, 10, GColorRed, bounds, ctx);
+    draw_number(0, 2, 10, GColorWhite, bounds, ctx);
 
-    draw_number(5, 0, 12, GColorWhite, bounds, ctx);
-    draw_number(6, 5, 12, GColorWhite, bounds, ctx);
-    draw_number(7, 10, 12, GColorWhite, bounds, ctx);
-    draw_number(8, 15, 12, GColorWhite, bounds, ctx);
-    draw_number(9, 20, 12, GColorWhite, bounds, ctx);
+    draw_number(1, 8, 10, GColorRed, bounds, ctx);
+    draw_number(1, 7, 10, GColorWhite, bounds, ctx);
+
+    draw_number(3, 14, 10, GColorRed, bounds, ctx);
+    draw_number(3, 13, 10, GColorWhite, bounds, ctx);
+
+    draw_number(9, 19, 10, GColorRed, bounds, ctx);
+    draw_number(9, 18, 10, GColorWhite, bounds, ctx);
 }
 
 // update procs =====================================================
