@@ -5,23 +5,31 @@
 #define PBL_IS_ROUND PBL_IF_ROUND_ELSE(true, false)
 #define PBL_IS_COLOR PBL_IF_COLOR_ELSE(true, false)
 
-static char hour_char[] = "hh";
-static char min_char[] = "mm";
+static int hour;
+static int min;
 
 // PIXEL CANVAS RESOLUTION
 // round: 30 x 30
 // non-round: 24x28
 static GPoint resolution = {
     .x = PBL_IF_ROUND_ELSE(30, 24),
-    .y = PBL_IF_ROUND_ELSE(30, 28)};
+    .y = PBL_IF_ROUND_ELSE(30, 28)
+};
 
 /// @brief updates time and sets char variables to hour and minute
 void update_time() {
     time_t time_temp = time(NULL);
-    struct tm *tick_time = localtime(&time_temp);
+    struct tm *t = localtime(&time_temp);
 
-    strftime(hour_char, sizeof(hour_char), clock_is_24h_style() ? "%H" : "%I", tick_time);
-    strftime(min_char, sizeof(min_char), "%M", tick_time);
+    // sets hour depending on watch's 24h setting
+    if (clock_is_24h_style()) {
+        hour = t->tm_hour;
+    } else {
+        hour = (t->tm_hour) % 12;
+    }
+
+    // sets minute
+    min = t->tm_min;
 }
 
 // drawing functions ================================================
@@ -57,15 +65,13 @@ static void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx) 
 /// @param y_offset y coordinate (relative to pixel resolution)
 /// @param color color to draw
 /// @param ctx context thinfy
-
 static void draw_number(int number, int x_offset, int y_offset, GColor color, GRect bounds, GContext *ctx) {
     int *num_array;
 
-    switch(number) {
-        
+    switch (number) {
         // ONE
         case 1:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 0, 1, 1, 1,
                 0, 1, 1, 1,
                 0, 0, 1, 1,
@@ -79,7 +85,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // TWO
         case 2:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 1, 1,
@@ -93,7 +99,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // THREE
         case 3:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 1, 1,
@@ -107,7 +113,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // FOUR
         case 4:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 0, 1, 1,
                 1, 0, 1, 1,
                 1, 1, 1, 1,
@@ -118,10 +124,10 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
             };
 
             break;
-        
+
         // FIVE
         case 5:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 1, 0, 0,
@@ -135,7 +141,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // SIX
         case 6:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 1, 0, 0,
@@ -149,7 +155,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // SEVEN
         case 7:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 0, 0, 1, 1,
@@ -163,7 +169,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // EIGHT
         case 8:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 0, 0, 1,
@@ -177,7 +183,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // NINE
         case 9:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 0, 1, 1,
@@ -191,7 +197,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
         // ZERO
         default:
-            num_array = (int[28]) {
+            num_array = (int[28]){
                 1, 1, 1, 1,
                 1, 1, 1, 1,
                 1, 0, 0, 1,
@@ -207,10 +213,10 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
     int iteration = 0;
 
     // draws each row iteration, top down
-    for(int h = 0; h < 7; h++) {
-        // draws each row things, left to right
-        for(int w = 0; w < 4; w++) {
-            if(num_array[iteration] == 1) {
+    for (int h = 0; h < 7; h++) {
+        // draws each pixel in the row, left to right
+        for (int w = 0; w < 4; w++) {
+            if (num_array[iteration] == 1) {
                 draw_pixel(x_offset + w, y_offset + h, color, bounds, ctx);
             }
 
@@ -220,25 +226,15 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 }
 
 /// @brief Draws the time to the screen
+/// @param layer the layer to draw the time on
+/// @param ctx GContext variable to draw with
 static void draw_time(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_unobstructed_bounds(layer);
 
-    graphics_context_set_text_color(ctx, settings.main_color);
-
-    GRect textbox = GRect(0, 0, bounds.size.w, bounds.size.h);
-
-    graphics_draw_text(
-        ctx,
-        "27",
-        fonts_get_system_font(FONT_KEY_LECO_38_BOLD_NUMBERS),
-        textbox,
-        GTextOverflowModeTrailingEllipsis,
-        GTextAlignmentCenter,
-        0);
-}
-
-static void test_numbers(Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
+    int hour1;
+    int hour2;
+    int min1;
+    int min2;
 
     draw_number(0, 3, 10, GColorRed, bounds, ctx);
     draw_number(0, 2, 10, GColorWhite, bounds, ctx);
@@ -251,6 +247,9 @@ static void test_numbers(Layer *layer, GContext *ctx) {
 
     draw_number(9, 19, 10, GColorRed, bounds, ctx);
     draw_number(9, 18, 10, GColorWhite, bounds, ctx);
+}
+
+static void test_numbers(Layer *layer, GContext *ctx) {
 }
 
 // update procs =====================================================
