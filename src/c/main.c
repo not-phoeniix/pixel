@@ -16,6 +16,8 @@ void update_stuff() {
 
     // redraw all layers
     layer_mark_dirty(time_layer);
+    layer_mark_dirty(bar_layer);
+    layer_mark_dirty(bg_layer);
 }
 
 // handlers =========================================================

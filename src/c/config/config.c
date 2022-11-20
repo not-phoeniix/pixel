@@ -16,8 +16,6 @@ static void set_defaults() {
     settings.bar_number = 0;
 
     settings.do_bt_buzz = true;
-
-    // background global config, not configurable
 }
 
 // loading settings from persistent storage
