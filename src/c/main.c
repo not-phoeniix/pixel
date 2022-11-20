@@ -20,11 +20,17 @@ void update_stuff() {
     layer_mark_dirty(bg_layer);
 }
 
-// handlers =========================================================
+// handlers/services ================================================
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     update_time();
     layer_mark_dirty(time_layer);
+}
+
+static void bluetooth_callback(bool connected) {
+    if(settings.do_bt_buzz && !connected) {
+        vibes_short_pulse();
+    }
 }
 
 // window load and unload ===========================================
@@ -63,6 +69,9 @@ static void init() {
 
     // subscribing to watch services
     tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+    connection_service_subscribe((ConnectionHandlers){
+        .pebble_app_connection_handler = bluetooth_callback
+    });
 
     // setting window load & unload functions
     window_set_window_handlers(main_window, (WindowHandlers){
@@ -76,10 +85,13 @@ static void init() {
     load_settings();
 
     window_stack_push(main_window, true);
+
+    bluetooth_callback(connection_service_peek_pebble_app_connection());
 }
 
 static void deinit() {
     tick_timer_service_unsubscribe();
+    connection_service_unsubscribe();
     window_destroy(main_window);
 }
 
