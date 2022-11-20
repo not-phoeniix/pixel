@@ -46,15 +46,9 @@
             },
             {
                 "type": "color",
-                "messageKey": "accent_color_2",
+                "messageKey": "bg_color_2",
                 "label": "Background accent 2",
                 "defaultValue": "0x555555"
-            },
-            {
-                "type": "toggle",
-                "messageKey": "invert_bg_colors",
-                "label": "Invert bg accent colors",
-                "defaultValue": "false"
             }
         ]
     },

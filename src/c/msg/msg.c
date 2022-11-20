@@ -30,11 +30,6 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.bg_color_2 = GColorFromHEX(bg_color_2_t->value->int32);
     }
 
-    Tuple *invert_bg_colors_t = dict_find(iter, MESSAGE_KEY_invert_bg_colors);
-    if(invert_bg_colors_t) {
-        settings.invert_bg_colors = invert_bg_colors_t->value->int32 == 1;
-    }
-
     Tuple *bg_number_t = dict_find(iter, MESSAGE_KEY_bg_number);
     if(bg_number_t) {
         settings.bg_number = atoi(bg_number_t->value->cstring);
@@ -58,7 +53,7 @@ void init_msg() {
     app_message_register_inbox_received(inbox_recieved_handler);
 
     // calculates buffer size based on how many tuples there are up there ^^
-    uint32_t buffer_size = dict_calc_buffer_size(9);
+    uint32_t buffer_size = dict_calc_buffer_size(8);
 
     app_message_open(buffer_size, buffer_size);
 }

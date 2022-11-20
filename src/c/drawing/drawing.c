@@ -253,11 +253,11 @@ static void draw_time(Layer *layer, GContext *ctx) {
 /// @brief Draws the bar in the centered style
 /// @param height height (in relative pixels) to draw it
 /// @param inverted whether colors are inverted
-static void draw_bar_center(int x, int y, bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
-    GColor color2 = inverted ? settings.bg_color_1 : settings.bg_color_2;
+    GColor color1 = settings.bg_color_1;
+    GColor color2 = settings.bg_color_2;
 
     for(int i = 0; i < 5; i++) {
         draw_pixel(x + i, y, color2, bounds, ctx);
@@ -280,10 +280,10 @@ static void draw_bar_center(int x, int y, bool inverted, Layer *layer, GContext 
 /// @brief Draws the bar in the solid style
 /// @param height height (in relative pixels) to draw it
 /// @param inverted whether colors are inverted
-static void draw_bar_solid(int x, int y, bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor color = inverted ? settings.bg_color_2 : settings.bg_color_1;
+    GColor color = settings.bg_color_1;
 
     for(int i = 0; i < 16; i++) {
         draw_pixel(4 + i, y, color, bounds, ctx);
@@ -293,11 +293,11 @@ static void draw_bar_solid(int x, int y, bool inverted, Layer *layer, GContext *
 /// @brief Draws the bar in the dotted style
 /// @param height height (in relative pixels) to draw it
 /// @param inverted whether colors are inverted
-static void draw_bar_dotted(int x, int y, bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
-    GColor color2 = inverted ? settings.bg_color_1 : settings.bg_color_2;
+    GColor color1 = settings.bg_color_1;
+    GColor color2 = settings.bg_color_2;
 
     for(int i = 0; i < 16; i += 2) {
         draw_pixel(4 + i, y, color1, bounds, ctx);
@@ -337,11 +337,11 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
 
 /// @brief Draws background with shine pattern
 /// @param inverted whether the colors are inverted
-static void draw_bg_shine(bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bg_shine(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
-    GColor color2 = inverted ? settings.bg_color_1 : settings.bg_color_2;
+    GColor color1 = settings.bg_color_1;
+    GColor color2 = settings.bg_color_2;
     GColor color3 = settings.bg_color_main;
 
     GColor colors[] = {
@@ -364,10 +364,10 @@ static void draw_bg_shine(bool inverted, Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with grid pattern
 /// @param inverted whether the colors are inverted
-static void draw_bg_grid(bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bg_grid(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
+    GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_main;
 
     // top grid
@@ -413,10 +413,10 @@ static void draw_bg_pride(Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with outline pattern
 /// @param inverted whether the colors are inverted
-static void draw_bg_outline(bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bg_outline(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor color = inverted ? settings.bg_color_2 : settings.bg_color_1;
+    GColor color = settings.bg_color_1;
 
     // top edge
     for(int x = 0; x < resolution.x; x++) {
@@ -454,22 +454,22 @@ void bar_update_proc(Layer *layer, GContext *ctx) {
     switch(settings.bar_number) {
         // centered style
         case 0:
-            draw_bar_center(x_offset, y_offset, settings.invert_bg_colors, layer, ctx);
-            draw_bar_center(x_offset, y_offset + 10, settings.invert_bg_colors, layer, ctx);
+            draw_bar_center(x_offset, y_offset, layer, ctx);
+            draw_bar_center(x_offset, y_offset + 10, layer, ctx);
 
             break;
 
         // solid style
         case 1:
-            draw_bar_solid(x_offset, y_offset, settings.invert_bg_colors, layer, ctx);
-            draw_bar_solid(x_offset, y_offset + 10, settings.invert_bg_colors, layer, ctx);
+            draw_bar_solid(x_offset, y_offset, layer, ctx);
+            draw_bar_solid(x_offset, y_offset + 10, layer, ctx);
 
             break;
 
         // dotted style
         case 2:
-            draw_bar_dotted(x_offset, y_offset, settings.invert_bg_colors, layer, ctx);
-            draw_bar_dotted(x_offset, y_offset + 10, !settings.invert_bg_colors, layer, ctx);
+            draw_bar_dotted(x_offset, y_offset, layer, ctx);
+            draw_bar_dotted(x_offset, y_offset + 10, layer, ctx);
 
             break;
 
@@ -484,17 +484,17 @@ void bg_update_proc(Layer *layer, GContext *ctx) {
     switch(settings.bg_number) {
         // shine bg
         case 0:
-            draw_bg_shine(settings.invert_bg_colors, layer, ctx);
+            draw_bg_shine(layer, ctx);
             break;
 
         // grid bg
         case 1:
-            draw_bg_grid(settings.invert_bg_colors, layer, ctx);
+            draw_bg_grid(layer, ctx);
             break;
 
         // outline bg
         case 2:
-            draw_bg_outline(settings.invert_bg_colors, layer, ctx);
+            draw_bg_outline(layer, ctx);
             break;
 
         // pride bg
