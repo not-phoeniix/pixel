@@ -8,6 +8,7 @@ typedef struct ClaySettings {
     GColor bg_color_main;
     GColor bg_color_1;
     GColor bg_color_2;
+    bool invert_bg_colors;
     int bg_number;
     int bar_number;
     bool do_bt_buzz;
@@ -15,6 +16,7 @@ typedef struct ClaySettings {
 
 Window *main_window;
 Layer *bg_layer;
+Layer *bar_layer;
 Layer *time_layer;
 ClaySettings settings;
 

@@ -49,6 +49,12 @@
                 "messageKey": "accent_color_2",
                 "label": "Background accent 2",
                 "defaultValue": "0x555555"
+            },
+            {
+                "type": "toggle",
+                "messageKey": "invert_bg_colors",
+                "label": "Invert bg accent colors",
+                "defaultValue": "false"
             }
         ]
     },
@@ -59,6 +65,58 @@
                 "type": "heading",
                 "defaultValue": "Config",
                 "size": "7"
+            },
+            {
+                "type": "toggle",
+                "messageKey": "do_bt_buzz",
+                "label": "Enable buzz on BT disconnect",
+                "defaultValue": "true"
+            },
+            {
+                "type": "select",
+                "messageKey": "bg_number",
+                "label": "Background style",
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "Shine"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Grid"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Outline"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Pride"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "messageKey": "bar_number",
+                "label": "Bar style",
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "Centered"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Solid"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Dotted"
+                    },
+                    {
+                        "value": "3",
+                        "label": "None"
+                    }
+                ]
             }
         ]
     },

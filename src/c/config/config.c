@@ -11,11 +11,12 @@ static void set_defaults() {
     settings.bg_color_main = GColorBlack;
     settings.bg_color_1 = GColorLightGray;
     settings.bg_color_2 = GColorDarkGray;
+    settings.invert_bg_colors = false;
 
     settings.bg_number = 0;
-    settings.bar_number = 0;
+    settings.bar_number = 3;
 
-    settings.do_bt_buzz = false;
+    settings.do_bt_buzz = true;
 
     // background global config, not configurable
 }

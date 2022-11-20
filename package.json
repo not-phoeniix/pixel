@@ -29,6 +29,7 @@
             "bg_color_main",
             "bg_color_1",
             "bg_color_2",
+            "invert_bg_colors",
             "bg_number",
             "bar_number",
             "do_bt_buzz"

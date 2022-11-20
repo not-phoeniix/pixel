@@ -33,6 +33,14 @@ static void main_window_load(Window *window) {
 
     update_time();
 
+    bg_layer = layer_create(full_bounds);
+    // layer_set_update_proc(bg_layer, bg_update_proc);
+    layer_add_child(window_layer, bg_layer);
+
+    bar_layer = layer_create(full_bounds);
+    layer_set_update_proc(bar_layer, bar_update_proc);
+    layer_add_child(window_layer, bar_layer);
+
     time_layer = layer_create(full_bounds);
     layer_set_update_proc(time_layer, time_update_proc);
     layer_add_child(window_layer, time_layer);
