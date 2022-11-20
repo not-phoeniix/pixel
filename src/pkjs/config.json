@@ -1,0 +1,50 @@
+[
+    {
+        "type": "section",
+        "items": [
+            {
+                "type": "heading",
+                "defaultValue": "Pixel"
+            },
+            {
+                "type": "text",
+                "defaultValue": "By Nikki"
+            }
+        ]
+    },
+    {
+        "type": "section",
+        "items": [
+            {
+                "type": "heading",
+                "defaultValue": "Colors",
+                "size": "7"
+            },
+            {
+                "type": "color",
+                "messageKey": "KEY_main_color",
+                "label": "Main color"
+            },
+            {
+                "type": "color",
+                "messageKey": "KEY_shadow_color",
+                "label": "Shadow color"
+            },
+            {
+                "type": "color",
+                "messageKey": "KEY_bg_color",
+                "label": "Background color"
+            },
+            {
+                "type": "color",
+                "messageKey": "KEY_bg_color_1",
+                "label": "Background accent 1"
+            },
+            {
+                "type": "color",
+                "messageKey": "KEY_accent_color_2",
+                "label": "Background accent 2"
+            }
+        ]
+    }
+]

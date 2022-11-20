@@ -29,6 +29,8 @@ static void main_window_load(Window *window) {
     Layer *window_layer = window_get_root_layer(main_window);
     GRect full_bounds = layer_get_bounds(window_layer);
 
+    update_time();
+
     time_layer = layer_create(full_bounds);
     layer_set_update_proc(time_layer, time_update_proc);
     layer_add_child(window_layer, time_layer);

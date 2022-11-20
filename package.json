@@ -1,29 +1,40 @@
 {
-  "name": "Pixel",
-  "author": "Nikki",
-  "version": "1.0.0",
-  "keywords": ["pebble-app"],
-  "private": true,
-  "dependencies": {},
-  "pebble": {
-    "displayName": "Pixel",
-    "uuid": "c8c22796-36b3-4fb8-abbe-0a5eab461345",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "targetPlatforms": [
-      "aplite",
-      "basalt",
-      "chalk",
-      "diorite"
+    "name": "Pixel",
+    "author": "Nikki",
+    "version": "1.0.0",
+    "keywords": [
+        "pebble-app"
     ],
-    "watchapp": {
-      "watchface": true
+    "private": true,
+    "dependencies": {
+        "pebble-clay": "^1.0.4"
     },
-    "messageKeys": [
-      "dummy"
-    ],
-    "resources": {
-      "media": []
+    "pebble": {
+        "displayName": "Pixel",
+        "uuid": "c8c22796-36b3-4fb8-abbe-0a5eab461345",
+        "sdkVersion": "3",
+        "enableMultiJS": true,
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite"
+        ],
+        "watchapp": {
+            "watchface": true
+        },
+        "messageKeys": [
+            "KEY_main_color",
+            "KEY_shadow_color",
+            "KEY_bg_color_main",
+            "KEY_bg_color_1",
+            "KEY_bg_color_2",
+            "KEY_bg_number",
+            "KEY_bar_number",
+            "KEY_do_bt_buzz"
+        ],
+        "resources": {
+            "media": []
+        }
     }
-  }
 }

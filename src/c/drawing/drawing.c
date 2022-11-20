@@ -72,13 +72,13 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
         // ONE
         case 1:
             num_array = (int[28]){
-                0, 1, 1, 1,
-                0, 1, 1, 1,
-                0, 0, 1, 1,
-                0, 0, 1, 1,
-                0, 0, 1, 1,
-                0, 0, 1, 1,
-                0, 0, 1, 1
+                1, 1, 1, 0,
+                1, 1, 1, 0,
+                0, 1, 1, 0,
+                0, 1, 1, 0,
+                0, 1, 1, 0,
+                1, 1, 1, 1,
+                1, 1, 1, 1
             };
 
             break;
@@ -231,22 +231,29 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 static void draw_time(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_unobstructed_bounds(layer);
 
+    // splits hour and min variables into 2 separate
+        // integers so they can be displayed separately
+        // w/ the drawing functions
     int hour2 = hour % 10;
     int hour1 = (hour - hour2) / 10;
     int min2 = min % 10;
     int min1 = (min - min2) / 10;
 
+    // hours
     draw_number(hour1, 3, 10, GColorRed, bounds, ctx);
     draw_number(hour1, 2, 10, GColorWhite, bounds, ctx);
-
     draw_number(hour2, 8, 10, GColorRed, bounds, ctx);
     draw_number(hour2, 7, 10, GColorWhite, bounds, ctx);
 
+    // minutes
     draw_number(min1, 14, 10, GColorRed, bounds, ctx);
     draw_number(min1, 13, 10, GColorWhite, bounds, ctx);
-
     draw_number(min2, 19, 10, GColorRed, bounds, ctx);
     draw_number(min2, 18, 10, GColorWhite, bounds, ctx);
+}
+
+static void draw_underover_lines(Layer *layer, GContext *ctx) {
+    
 }
 
 // update procs =====================================================
