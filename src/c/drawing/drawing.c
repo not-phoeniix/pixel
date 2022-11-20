@@ -252,9 +252,9 @@ static void draw_time(Layer *layer, GContext *ctx) {
     draw_number(min2, 18, 10, GColorWhite, bounds, ctx);
 }
 
-static void draw_underover_lines(Layer *layer, GContext *ctx) {
-    
-}
+//static void draw_bar(Layer *layer, GContext *ctx) {
+//    
+//}
 
 // update procs =====================================================
 

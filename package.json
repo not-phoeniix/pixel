@@ -24,14 +24,14 @@
             "watchface": true
         },
         "messageKeys": [
-            "KEY_main_color",
-            "KEY_shadow_color",
-            "KEY_bg_color_main",
-            "KEY_bg_color_1",
-            "KEY_bg_color_2",
-            "KEY_bg_number",
-            "KEY_bar_number",
-            "KEY_do_bt_buzz"
+            "main_color",
+            "shadow_color",
+            "bg_color_main",
+            "bg_color_1",
+            "bg_color_2",
+            "bg_number",
+            "bar_number",
+            "do_bt_buzz"
         ],
         "resources": {
             "media": []

@@ -17,3 +17,5 @@ Window *main_window;
 Layer *bg_layer;
 Layer *time_layer;
 ClaySettings settings;
+
+void update_stuff();
