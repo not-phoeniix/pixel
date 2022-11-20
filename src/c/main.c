@@ -2,15 +2,17 @@
 #include "main.h"
 #include "drawing/drawing.h"
 #include "config/config.h"
+#include "msg/msg.h"
 
 // hi there!
 // this watchface was made during the pebble hackathon-001!
 // hope you enjoy :)
 
 // universal update function ========================================
+
 void update_stuff() {
     //window_set_background_color(main_window, settings.bg_color);
-    window_set_background_color(main_window, GColorBlack);
+    window_set_background_color(main_window, settings.bg_color_main);
 
     // redraw all layers
     layer_mark_dirty(time_layer);
@@ -55,6 +57,9 @@ static void init() {
         .load = main_window_load,
         .unload = main_window_unload
     });
+
+    init_msg();
+    load_settings();
 
     load_settings();
 

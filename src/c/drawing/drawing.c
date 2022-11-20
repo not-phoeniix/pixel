@@ -240,16 +240,16 @@ static void draw_time(Layer *layer, GContext *ctx) {
     int min1 = (min - min2) / 10;
 
     // hours
-    draw_number(hour1, 3, 10, GColorRed, bounds, ctx);
-    draw_number(hour1, 2, 10, GColorWhite, bounds, ctx);
-    draw_number(hour2, 8, 10, GColorRed, bounds, ctx);
-    draw_number(hour2, 7, 10, GColorWhite, bounds, ctx);
+    draw_number(hour1, 3, 10, settings.shadow_color, bounds, ctx);
+    draw_number(hour1, 2, 10, settings.main_color, bounds, ctx);
+    draw_number(hour2, 8, 10, settings.shadow_color, bounds, ctx);
+    draw_number(hour2, 7, 10, settings.main_color, bounds, ctx);
 
     // minutes
-    draw_number(min1, 14, 10, GColorRed, bounds, ctx);
-    draw_number(min1, 13, 10, GColorWhite, bounds, ctx);
-    draw_number(min2, 19, 10, GColorRed, bounds, ctx);
-    draw_number(min2, 18, 10, GColorWhite, bounds, ctx);
+    draw_number(min1, 14, 10, settings.shadow_color, bounds, ctx);
+    draw_number(min1, 13, 10, settings.main_color, bounds, ctx);
+    draw_number(min2, 19, 10, settings.shadow_color, bounds, ctx);
+    draw_number(min2, 18, 10, settings.main_color, bounds, ctx);
 }
 
 //static void draw_bar(Layer *layer, GContext *ctx) {
