@@ -302,36 +302,122 @@ static void draw_bar_dotted(int height, bool inverted, Layer *layer, GContext *c
     }
 }
 
-/// @brief Draws background with pride pattern
-static void draw_bg_pride(Layer *layer, GContext *ctx) {
+/// @brief Draws background with shine pattern
+/// @param inverted whether the colors are inverted
+static void draw_bg_shine(bool inverted, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
-    GColor rainbow[] = {GColorPurple, GColorPurple, GColorBlue, GColorGreen, GColorYellow, GColorOrange, GColorRed};
-    int num_stripes = 7;
+    GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
+    GColor color2 = inverted ? settings.bg_color_1 : settings.bg_color_2;
+    GColor color3 = settings.bg_color_main;
+
+    draw_bg_corner(
+        (GColor[7]){
+            color1,
+            color2,
+            color3,
+            color3,
+            color1,
+            color2
+        },
+        layer,
+        ctx
+    );
+}
+
+static void draw_bg_grid(bool inverted, Layer *layer, GContext *ctx) {
+    GRect bounds = layer_get_bounds(layer);
+
+    GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
+    GColor color2 = settings.bg_color_main;
+
+    for(int y = 0; y < 6; y++) {
+        for(int x = 0; x < resolution.x; x += 2) {
+            draw_pixel(x, y, color1, bounds, ctx);
+            draw_pixel(x, y, color2, bounds, ctx);
+        }
+    }
+
+}
+
+/// @brief Draws background with pride pattern
+static void draw_bg_pride(Layer *layer, GContext *ctx) {
+    draw_bg_corner(
+        (GColor[7]){
+            GColorPurple,
+            GColorPurple,
+            GColorBlue,
+            GColorGreen,
+            GColorYellow,
+            GColorOrange,
+            GColorRed
+        },
+        layer,
+        ctx
+    );
+}
+
+/// @brief Draws background with outline pattern
+/// @param inverted whether the colors are inverted
+static void draw_bg_outline(bool inverted, Layer *layer, GContext *ctx) {
+    GRect bounds = layer_get_bounds(layer);
+
+    GColor color = inverted ? settings.bg_color_2 : settings.bg_color_1;
+
+    // top edge
+    for(int x = 0; x < resolution.x; x++) {
+        draw_pixel(x, 0, color, bounds, ctx);
+    }
+
+    // bottom edge
+    for(int x = 0; x < resolution.x; x++) {
+        draw_pixel(x, resolution.y - 1, color, bounds, ctx);
+    }
+
+    // left edge
+    for(int y = 0; y < resolution.y; y++) {
+        draw_pixel(0, y, color, bounds, ctx);
+    }
+
+    // right edge
+    for(int y = 0; y < resolution.y; y++) {
+        draw_pixel(resolution.x - 1, y, color, bounds, ctx);
+    }
+}
+
+/// @brief Draws background with corner-growing pattern
+static void draw_bg_corner(GColor color_array[], Layer *layer, GContext *ctx) {
+    GRect bounds = layer_get_bounds(layer);
+
+    //GColor rainbow[] = {GColorPurple, GColorPurple, GColorBlue, GColorGreen, GColorYellow, GColorOrange, GColorRed};
+    int num_stripes = sizeof(color_array) / sizeof(color_array[0]);
 
     int max_x = resolution.x - 1;
     int max_y = resolution.y - 1;
 
-    int counter = num_stripes;
+    int counter;
 
+    // top left flag
+    counter = num_stripes;
     for(int y = 0; y < num_stripes; y++) {
         for(int x = 0; x < counter; x++) {
-            draw_pixel(x, y, rainbow[x + (num_stripes - counter)], bounds, ctx);
+            draw_pixel(x, y, color_array[x + (num_stripes - counter)], bounds, ctx);
         }
 
         counter--;
     }    
 
+    // bottom right flag
     counter = 0;
-
     for(int y = max_y; y > (max_y - num_stripes); y--) {
         for(int x = max_x; x > (max_x - num_stripes + counter); x--) {
-            draw_pixel(x, y, rainbow[max_x - x + counter], bounds, ctx);
+            draw_pixel(x, y, color_array[max_x - x + counter], bounds, ctx);
         }
 
         counter++;
     }
 }
+
 
 // update procs =====================================================
 
@@ -369,5 +455,29 @@ void bar_update_proc(Layer *layer, GContext *ctx) {
 }
 
 void bg_update_proc(Layer *layer, GContext *ctx) {
+    switch(settings.bg_number) {
+        // shine bg
+        case 0:
+            draw_bg_shine(settings.invert_bg_colors, layer, ctx);
+            break;
+
+        case 1:
+            draw_bg_grid(settings.invert_bg_colors, layer, ctx);
+            break;
+
+        case 2:
+            draw_bg_outline(settings.invert_bg_colors, layer, ctx);
+            break;
+
+        // pride bg
+        case 3:
+            draw_bg_pride(layer, ctx);
+            break;
+
+        // no bg drawn
+        default:
+            break;
+    }
+
     draw_bg_pride(layer, ctx);
 }

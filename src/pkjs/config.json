@@ -92,6 +92,10 @@
                     {
                         "value": "3",
                         "label": "Pride"
+                    },
+                    {
+                        "value": "4",
+                        "label": "None"
                     }
                 ]
             },

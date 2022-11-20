@@ -13,7 +13,7 @@ static void set_defaults() {
     settings.bg_color_2 = GColorDarkGray;
     settings.invert_bg_colors = false;
 
-    settings.bg_number = 0;
+    settings.bg_number = 1;
     settings.bar_number = 3;
 
     settings.do_bt_buzz = true;
