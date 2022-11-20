@@ -302,7 +302,7 @@ static void draw_bar_dotted(int height, bool inverted, Layer *layer, GContext *c
     }
 }
 
-/// @brief Draws background with corner-growing pattern
+/// @brief Draws background with corner-growing pattern, PARENT OF SHINE AND PRIDE
 static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
