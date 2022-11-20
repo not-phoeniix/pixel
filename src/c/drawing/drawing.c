@@ -339,7 +339,23 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
     GColor color2 = settings.bg_color_2;
     GColor color3 = settings.bg_color_main;
 
-    GColor colors[] = {
+    GColor colors_rect[] = {
+        color2,
+        color2,
+        color1,
+        color3,
+        color3,
+        color2,
+        color1
+    };
+
+    GColor colors_round[] = {
+        color3,
+        color3,
+        color3,
+        color3,
+        color3,
+        color3,
         color2,
         color2,
         color1,
@@ -350,8 +366,8 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
     };
 
     draw_bg_corner(
-        colors,
-        7,
+        PBL_IF_ROUND_ELSE(colors_round, colors_rect),
+        PBL_IF_ROUND_ELSE(13, 7),
         layer,
         ctx
     );
@@ -387,7 +403,23 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with pride pattern
 static void draw_bg_pride(Layer *layer, GContext *ctx) {
-    GColor flag[] = {
+    GColor flag_rect[] = {
+        GColorPurple,
+        GColorPurple,
+        GColorBlue,
+        GColorGreen,
+        GColorYellow,
+        GColorOrange,
+        GColorRed
+    };
+
+    GColor flag_round[] = {
+        GColorPurple,
+        GColorPurple,
+        GColorPurple,
+        GColorPurple,
+        GColorPurple,
+        GColorPurple,
         GColorPurple,
         GColorPurple,
         GColorBlue,
@@ -398,8 +430,8 @@ static void draw_bg_pride(Layer *layer, GContext *ctx) {
     };
 
     draw_bg_corner(
-        flag,
-        7,
+        PBL_IF_ROUND_ELSE(flag_round, flag_rect),
+        PBL_IF_ROUND_ELSE(13, 7),
         layer,
         ctx
     );
