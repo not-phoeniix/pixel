@@ -250,7 +250,6 @@ static void draw_time(Layer *layer, GContext *ctx) {
 
 /// @brief Draws the bar in the centered style
 /// @param height height (in relative pixels) to draw it
-/// @param inverted whether colors are inverted
 static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -277,7 +276,6 @@ static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
 
 /// @brief Draws the bar in the solid style
 /// @param height height (in relative pixels) to draw it
-/// @param inverted whether colors are inverted
 static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -290,7 +288,6 @@ static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
 
 /// @brief Draws the bar in the dotted style
 /// @param height height (in relative pixels) to draw it
-/// @param inverted whether colors are inverted
 static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -334,7 +331,6 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
 }
 
 /// @brief Draws background with shine pattern
-/// @param inverted whether the colors are inverted
 static void draw_bg_shine(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -361,7 +357,6 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
 }
 
 /// @brief Draws background with grid pattern
-/// @param inverted whether the colors are inverted
 static void draw_bg_grid(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -410,7 +405,6 @@ static void draw_bg_pride(Layer *layer, GContext *ctx) {
 }
 
 /// @brief Draws background with outline pattern
-/// @param inverted whether the colors are inverted
 static void draw_bg_outline(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -435,6 +429,22 @@ static void draw_bg_outline(Layer *layer, GContext *ctx) {
     for(int y = 0; y < resolution.y; y++) {
         draw_pixel(resolution.x - 1, y, color, bounds, ctx);
     }
+}
+
+/// @brief Draws background with outline pattern for time round
+static void draw_bg_outline_round(Layer *layer, GContext *ctx) {
+    GRect bounds = layer_get_bounds(layer);
+
+    window_set_background_color(main_window, settings.bg_color_1);
+
+    int distance_from_edge = 7;
+    int radius = (bounds.size.w / 2) - distance_from_edge;
+
+    GPoint center = grect_center_point(&bounds);
+
+    graphics_context_set_fill_color(ctx, settings.bg_color_main);
+
+    graphics_fill_circle(ctx, center, radius);
 }
 
 // update procs =====================================================
@@ -492,7 +502,12 @@ void bg_update_proc(Layer *layer, GContext *ctx) {
 
         // outline bg
         case 2:
-            draw_bg_outline(layer, ctx);
+            if(PBL_IS_ROUND) {
+                draw_bg_outline_round(layer, ctx);
+            } else {
+                draw_bg_outline(layer, ctx);
+            }
+
             break;
 
         // pride bg
