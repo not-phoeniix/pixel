@@ -302,6 +302,37 @@ static void draw_bar_dotted(int height, bool inverted, Layer *layer, GContext *c
     }
 }
 
+/// @brief Draws background with pride pattern
+static void draw_bg_pride(Layer *layer, GContext *ctx) {
+    GRect bounds = layer_get_bounds(layer);
+
+    GColor rainbow[] = {GColorPurple, GColorPurple, GColorBlue, GColorGreen, GColorYellow, GColorOrange, GColorRed};
+    int num_stripes = 7;
+
+    int max_x = resolution.x - 1;
+    int max_y = resolution.y - 1;
+
+    int counter = num_stripes;
+
+    for(int y = 0; y < num_stripes; y++) {
+        for(int x = 0; x < counter; x++) {
+            draw_pixel(x, y, rainbow[x + (num_stripes - counter)], bounds, ctx);
+        }
+
+        counter--;
+    }    
+
+    counter = 0;
+
+    for(int y = max_y; y > (max_y - num_stripes); y--) {
+        for(int x = max_x; x > (max_x - num_stripes + counter); x--) {
+            draw_pixel(x, y, rainbow[max_x - x + counter], bounds, ctx);
+        }
+
+        counter++;
+    }
+}
+
 // update procs =====================================================
 
 void time_update_proc(Layer *layer, GContext *ctx) {
@@ -338,5 +369,5 @@ void bar_update_proc(Layer *layer, GContext *ctx) {
 }
 
 void bg_update_proc(Layer *layer, GContext *ctx) {
-    // hi
+    draw_bg_pride(layer, ctx);
 }

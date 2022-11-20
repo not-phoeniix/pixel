@@ -10,3 +10,6 @@ void time_update_proc(Layer *layer, GContext *ctx);
 
 // update function for bar layer
 void bar_update_proc(Layer *layer, GContext *ctx);
+
+// update function for bg layer
+void bg_update_proc(Layer *layer, GContext *ctx);
