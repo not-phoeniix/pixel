@@ -87,8 +87,6 @@ static void init() {
     init_msg();
     load_settings();
 
-    load_settings();
-
     window_stack_push(main_window, true);
 
     bluetooth_callback(connection_service_peek_pebble_app_connection());
