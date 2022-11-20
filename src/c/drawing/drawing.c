@@ -438,10 +438,12 @@ static void draw_bg_outline(bool inverted, Layer *layer, GContext *ctx) {
 
 // update procs =====================================================
 
+// update function for time layer
 void time_update_proc(Layer *layer, GContext *ctx) {
     draw_time(layer, ctx);
 }
 
+// update function for bar layer
 void bar_update_proc(Layer *layer, GContext *ctx) {
     switch(settings.bar_number) {
         // centered style
@@ -471,6 +473,7 @@ void bar_update_proc(Layer *layer, GContext *ctx) {
     }
 }
 
+// update function for bg layer
 void bg_update_proc(Layer *layer, GContext *ctx) {
     switch(settings.bg_number) {
         // shine bg
