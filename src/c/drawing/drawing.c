@@ -1,18 +1,9 @@
-#include "drawing.h"
 #include <pebble.h>
+#include "drawing.h"
 #include "../main.h"
-
 
 static int hour;
 static int min;
-
-// PIXEL CANVAS RESOLUTION
-// round: 30 x 30
-// non-round: 24x28
-static GPoint resolution = {
-    .x = PBL_IF_ROUND_ELSE(30, 24),
-    .y = PBL_IF_ROUND_ELSE(30, 28)
-};
 
 /// @brief updates time and sets char variables to hour and minute
 void update_time() {
@@ -32,11 +23,7 @@ void update_time() {
 
 // drawing functions ================================================
 
-/// @brief Draws a pixel on the screen
-/// @param x x coord to draw pixel
-/// @param y y coord to draw pixel
-/// @param color color of pixel
-static void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx) {
+void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx) {
     GPoint screen_res = {
         .x = bounds.size.w,
         .y = bounds.size.h

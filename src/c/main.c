@@ -39,6 +39,11 @@ static void main_window_load(Window *window) {
     Layer *window_layer = window_get_root_layer(main_window);
     GRect full_bounds = layer_get_bounds(window_layer);
 
+    resolution = GPoint(
+        PBL_IF_ROUND_ELSE(30, 24),
+        PBL_IF_ROUND_ELSE(30, 28)
+    );
+
     update_time();
 
     bg_layer = layer_create(full_bounds);

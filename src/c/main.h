@@ -16,6 +16,9 @@ typedef struct ClaySettings {
     bool do_bt_buzz;
 } ClaySettings;
 
+// PIXEL CANVAS RESOLUTION
+GPoint resolution;
+
 Window *main_window;
 Layer *bg_layer;
 Layer *bar_layer;
