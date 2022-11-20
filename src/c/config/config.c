@@ -7,7 +7,7 @@ static void set_defaults() {
     // changable by settings page
         // DEFAULT OPTIONS:
     settings.main_color = GColorWhite;
-    settings.shadow_color = PBL_IF_COLOR_ELSE(GColorRed, GColorLightGray);
+    settings.shadow_color = PBL_IF_COLOR_ELSE(GColorDarkCandyAppleRed, GColorLightGray);
     settings.bg_color_main = GColorBlack;
     settings.bg_color_1 = PBL_IF_COLOR_ELSE(GColorLightGray, GColorWhite);
     settings.bg_color_2 = GColorDarkGray;

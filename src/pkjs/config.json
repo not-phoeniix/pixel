@@ -32,7 +32,7 @@
                 "messageKey": "shadow_color",
                 "label": "Shadow color",
                 "allowGray": "true",
-                "defaultValue": "0xFF0000"
+                "defaultValue": "0xAA0000"
             },
             {
                 "type": "color",
