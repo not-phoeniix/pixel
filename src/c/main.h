@@ -2,6 +2,9 @@
 
 #include <pebble.h>
 
+#define PBL_IS_ROUND PBL_IF_ROUND_ELSE(true, false)
+#define PBL_IS_COLOR PBL_IF_COLOR_ELSE(true, false)
+
 typedef struct ClaySettings {
     GColor main_color;
     GColor shadow_color;

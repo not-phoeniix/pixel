@@ -24,30 +24,35 @@
                 "type": "color",
                 "messageKey": "main_color",
                 "label": "Main color",
+                "allowGray": "true",
                 "defaultValue": "0xFFFFFF"
             },
             {
                 "type": "color",
                 "messageKey": "shadow_color",
                 "label": "Shadow color",
+                "allowGray": "true",
                 "defaultValue": "0xFF0000"
             },
             {
                 "type": "color",
                 "messageKey": "bg_color_main",
                 "label": "Background color",
+                "allowGray": "true",
                 "defaultValue": "0x000000"
             },
             {
                 "type": "color",
                 "messageKey": "bg_color_1",
                 "label": "Background accent 1",
+                "allowGray": "true",
                 "defaultValue": "0xAAAAAA"
             },
             {
                 "type": "color",
                 "messageKey": "bg_color_2",
                 "label": "Background accent 2",
+                "allowGray": "true",
                 "defaultValue": "0x555555"
             }
         ]
@@ -70,6 +75,7 @@
                 "type": "select",
                 "messageKey": "bg_number",
                 "label": "Background style",
+                "capabilities": ["COLOR"],
                 "options": [
                     {
                         "value": "0",
@@ -81,14 +87,36 @@
                     },
                     {
                         "value": "2",
-                        "label": "Outline",
-                        "capabilities": ["RECT"]
+                        "label": "Outline"
                     },
                     {
                         "value": "3",
-                        "label": "Pride",
-                        "capabilities": ["COLOR"]
+                        "label": "Pride"
 
+                    },
+                    {
+                        "value": "4",
+                        "label": "None"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "messageKey": "bg_number",
+                "label": "Background style",
+                "capabilities": ["BW"],
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "Shine"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Grid"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Outline"
                     },
                     {
                         "value": "4",
