@@ -227,8 +227,9 @@ static void draw_time(Layer *layer, GContext *ctx) {
     // splits hour and min variables into 2 separate
         // integers so they can be displayed separately
         // w/ the drawing functions
-    int hour2 = hour % 10;
-    int hour1 = (hour - hour2) / 10;
+
+    int hour2 = (hour == 0) ? 2 : hour % 10;
+    int hour1 = (hour == 0) ? 1 : (hour - hour2) / 10;
     int min2 = min % 10;
     int min1 = (min - min2) / 10;
 
