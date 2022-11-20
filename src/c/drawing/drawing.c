@@ -234,71 +234,74 @@ static void draw_time(Layer *layer, GContext *ctx) {
     int min2 = min % 10;
     int min1 = (min - min2) / 10;
 
+    int x_offset = PBL_IF_ROUND_ELSE(5, 2);
+    int y_offset = PBL_IF_ROUND_ELSE(12, 11);
+
     // hours
-    draw_number(hour1, 3, 11, settings.shadow_color, bounds, ctx);
-    draw_number(hour1, 2, 11, settings.main_color, bounds, ctx);
-    draw_number(hour2, 8, 11, settings.shadow_color, bounds, ctx);
-    draw_number(hour2, 7, 11, settings.main_color, bounds, ctx);
+    draw_number(hour1, x_offset + 1, y_offset, settings.shadow_color, bounds, ctx);
+    draw_number(hour1, x_offset + 0, y_offset, settings.main_color, bounds, ctx);
+    draw_number(hour2, x_offset + 6, y_offset, settings.shadow_color, bounds, ctx);
+    draw_number(hour2, x_offset + 5, y_offset, settings.main_color, bounds, ctx);
 
     // minutes
-    draw_number(min1, 14, 11, settings.shadow_color, bounds, ctx);
-    draw_number(min1, 13, 11, settings.main_color, bounds, ctx);
-    draw_number(min2, 19, 11, settings.shadow_color, bounds, ctx);
-    draw_number(min2, 18, 11, settings.main_color, bounds, ctx);
+    draw_number(min1, x_offset + 12, y_offset, settings.shadow_color, bounds, ctx);
+    draw_number(min1, x_offset + 11, y_offset, settings.main_color, bounds, ctx);
+    draw_number(min2, x_offset + 17, y_offset, settings.shadow_color, bounds, ctx);
+    draw_number(min2, x_offset + 16, y_offset, settings.main_color, bounds, ctx);
 }
 
 /// @brief Draws the bar in the centered style
 /// @param height height (in relative pixels) to draw it
 /// @param inverted whether colors are inverted
-static void draw_bar_centered(int height, bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bar_center(int x, int y, bool inverted, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
     GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
     GColor color2 = inverted ? settings.bg_color_1 : settings.bg_color_2;
 
     for(int i = 0; i < 5; i++) {
-        draw_pixel(4 + i, height, color2, bounds, ctx);
+        draw_pixel(x + i, y, color2, bounds, ctx);
     }
 
-    draw_pixel(9, height, color1, bounds, ctx);
-    draw_pixel(10, height, color2, bounds, ctx);
+    draw_pixel(x + 5, y, color1, bounds, ctx);
+    draw_pixel(x + 6, y, color2, bounds, ctx);
 
-    draw_pixel(11, height, color1, bounds, ctx);
-    draw_pixel(12, height, color1, bounds, ctx);
+    draw_pixel(x + 7, y, color1, bounds, ctx);
+    draw_pixel(x + 8, y, color1, bounds, ctx);
 
-    draw_pixel(13, height, color2, bounds, ctx);
-    draw_pixel(14, height, color1, bounds, ctx);
+    draw_pixel(x + 9, y, color2, bounds, ctx);
+    draw_pixel(x + 10, y, color1, bounds, ctx);
 
     for(int i = 0; i < 5; i++) {
-        draw_pixel(15 + i, height, color2, bounds, ctx);
+        draw_pixel(x + 11 + i, y, color2, bounds, ctx);
     }
 }
 
 /// @brief Draws the bar in the solid style
 /// @param height height (in relative pixels) to draw it
 /// @param inverted whether colors are inverted
-static void draw_bar_solid(int height, bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bar_solid(int x, int y, bool inverted, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
     GColor color = inverted ? settings.bg_color_2 : settings.bg_color_1;
 
     for(int i = 0; i < 16; i++) {
-        draw_pixel(4 + i, height, color, bounds, ctx);
+        draw_pixel(4 + i, y, color, bounds, ctx);
     }
 }
 
 /// @brief Draws the bar in the dotted style
 /// @param height height (in relative pixels) to draw it
 /// @param inverted whether colors are inverted
-static void draw_bar_dotted(int height, bool inverted, Layer *layer, GContext *ctx) {
+static void draw_bar_dotted(int x, int y, bool inverted, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
     GColor color1 = inverted ? settings.bg_color_2 : settings.bg_color_1;
     GColor color2 = inverted ? settings.bg_color_1 : settings.bg_color_2;
 
     for(int i = 0; i < 16; i += 2) {
-        draw_pixel(4 + i, height, color1, bounds, ctx);
-        draw_pixel(5 + i, height, color2, bounds, ctx);
+        draw_pixel(4 + i, y, color1, bounds, ctx);
+        draw_pixel(5 + i, y, color2, bounds, ctx);
     }
 }
 
@@ -445,25 +448,28 @@ void time_update_proc(Layer *layer, GContext *ctx) {
 
 // update function for bar layer
 void bar_update_proc(Layer *layer, GContext *ctx) {
+    int x_offset = PBL_IF_ROUND_ELSE(7, 4);
+    int y_offset = PBL_IF_ROUND_ELSE(10, 9);
+
     switch(settings.bar_number) {
         // centered style
         case 0:
-            draw_bar_centered(9, settings.invert_bg_colors, layer, ctx);
-            draw_bar_centered(19, settings.invert_bg_colors, layer, ctx);
+            draw_bar_center(x_offset, y_offset, settings.invert_bg_colors, layer, ctx);
+            draw_bar_center(x_offset, y_offset + 10, settings.invert_bg_colors, layer, ctx);
 
             break;
 
         // solid style
         case 1:
-            draw_bar_solid(9, settings.invert_bg_colors, layer, ctx);
-            draw_bar_solid(19, settings.invert_bg_colors, layer, ctx);
+            draw_bar_solid(x_offset, y_offset, settings.invert_bg_colors, layer, ctx);
+            draw_bar_solid(x_offset, y_offset + 10, settings.invert_bg_colors, layer, ctx);
 
             break;
 
         // dotted style
         case 2:
-            draw_bar_dotted(9, settings.invert_bg_colors, layer, ctx);
-            draw_bar_dotted(19, !settings.invert_bg_colors, layer, ctx);
+            draw_bar_dotted(x_offset, y_offset, settings.invert_bg_colors, layer, ctx);
+            draw_bar_dotted(x_offset, y_offset + 10, !settings.invert_bg_colors, layer, ctx);
 
             break;
 

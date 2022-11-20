@@ -49,6 +49,8 @@ static void main_window_load(Window *window) {
 }
 
 static void main_window_unload(Window *window) {
+    layer_destroy(bg_layer);
+    layer_destroy(bar_layer);
     layer_destroy(time_layer);
 }
 
