@@ -250,7 +250,8 @@ static void draw_time(Layer *layer, GContext *ctx) {
 }
 
 /// @brief Draws the bar in the centered style
-/// @param height height (in relative pixels) to draw it
+/// @param x x position to draw (grid-relative)
+/// @param y y position to draw (grid-relative)
 static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -276,7 +277,8 @@ static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
 }
 
 /// @brief Draws the bar in the solid style
-/// @param height height (in relative pixels) to draw it
+/// @param x x position to draw (grid-relative)
+/// @param y y position to draw (grid-relative)
 static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -288,7 +290,8 @@ static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
 }
 
 /// @brief Draws the bar in the dotted style
-/// @param height height (in relative pixels) to draw it
+/// @param x x position to draw (grid-relative)
+/// @param y y position to draw (grid-relative)
 static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
@@ -299,6 +302,13 @@ static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
         draw_pixel(4 + i, y, color1, bounds, ctx);
         draw_pixel(5 + i, y, color2, bounds, ctx);
     }
+}
+
+/// @brief Draws the bar in the solid style, changes color w/ battery
+/// @param x x position to draw (grid-relative)
+/// @param y y position to draw (grid-relative)
+static void draw_bar_battery(int x, int y, Layer *layer, GContext *ctx) {
+
 }
 
 /// @brief Draws background with corner-growing pattern, PARENT OF SHINE AND PRIDE
