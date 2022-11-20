@@ -234,7 +234,7 @@ static void draw_time(Layer *layer, GContext *ctx) {
     int min1 = (min - min2) / 10;
 
     int x_offset = PBL_IF_ROUND_ELSE(5, 2);
-    int y_offset = PBL_IF_ROUND_ELSE(12, 11);
+    int y_offset = 11;
 
     // hours
     draw_number(hour1, x_offset + 1, y_offset, settings.shadow_color, bounds, ctx);
@@ -422,6 +422,7 @@ static void draw_bg_pride(Layer *layer, GContext *ctx) {
         GColorPurple,
         GColorPurple,
         GColorPurple,
+        GColorPurple,
         GColorBlue,
         GColorGreen,
         GColorYellow,
@@ -431,7 +432,7 @@ static void draw_bg_pride(Layer *layer, GContext *ctx) {
 
     draw_bg_corner(
         PBL_IF_ROUND_ELSE(flag_round, flag_rect),
-        PBL_IF_ROUND_ELSE(13, 7),
+        PBL_IF_ROUND_ELSE(14, 7),
         layer,
         ctx
     );
@@ -490,7 +491,7 @@ void time_update_proc(Layer *layer, GContext *ctx) {
 // update function for bar layer
 void bar_update_proc(Layer *layer, GContext *ctx) {
     int x_offset = PBL_IF_ROUND_ELSE(7, 4);
-    int y_offset = PBL_IF_ROUND_ELSE(10, 9);
+    int y_offset = 9;
 
     switch(settings.bar_number) {
         // centered style
