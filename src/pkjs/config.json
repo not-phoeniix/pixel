@@ -81,11 +81,14 @@
                     },
                     {
                         "value": "2",
-                        "label": "Outline"
+                        "label": "Outline",
+                        "capabilities": ["RECT"]
                     },
                     {
                         "value": "3",
-                        "label": "Pride"
+                        "label": "Pride",
+                        "capabilities": ["COLOR"]
+
                     },
                     {
                         "value": "4",
