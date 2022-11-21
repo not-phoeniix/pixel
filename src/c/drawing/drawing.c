@@ -370,6 +370,8 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_main;
 
+
+
     // top grid
     for(int y = 0; y < 6; y++) {
         for(int x = 0; x < resolution.x; x += 2) {
@@ -381,7 +383,7 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
     }
 
     // bottom grid
-    for(int y = resolution.y - 5; y < resolution.y; y++) {
+    for(int y = resolution.y - PBL_IF_ROUND_ELSE(7, 5); y < resolution.y; y++) {
         for(int x = 0; x < resolution.x; x += 2) {
             int offset = x + (y % 2);
 
