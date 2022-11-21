@@ -272,7 +272,7 @@ static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
     GColor color = settings.bg_color_1;
 
     for(int i = 0; i < 16; i++) {
-        draw_pixel(4 + i, y, color, bounds, ctx);
+        draw_pixel(x + i, y, color, bounds, ctx);
     }
 }
 
@@ -286,8 +286,8 @@ static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
     GColor color2 = settings.bg_color_2;
 
     for(int i = 0; i < 16; i += 2) {
-        draw_pixel(4 + i, y, color1, bounds, ctx);
-        draw_pixel(5 + i, y, color2, bounds, ctx);
+        draw_pixel(x + i, y, color1, bounds, ctx);
+        draw_pixel(x + 1 + i, y, color2, bounds, ctx);
     }
 }
 

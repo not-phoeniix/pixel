@@ -14,6 +14,10 @@ void update_stuff() {
     //window_set_background_color(main_window, settings.bg_color);
     window_set_background_color(main_window, settings.bg_color_main);
 
+    if(PBL_IS_ROUND && settings.bg_number == 2) {
+        window_set_background_color(main_window, settings.bg_color_1);
+    }
+
     // redraw all layers
     layer_mark_dirty(time_layer);
     layer_mark_dirty(bar_layer);
