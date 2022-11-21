@@ -291,13 +291,6 @@ static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
     }
 }
 
-/// @brief Draws the bar in the solid style, changes color w/ battery
-/// @param x x position to draw (grid-relative)
-/// @param y y position to draw (grid-relative)
-static void draw_bar_battery(int x, int y, Layer *layer, GContext *ctx) {
-
-}
-
 /// @brief Draws background with corner-growing pattern, PARENT OF SHINE AND PRIDE
 static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
@@ -307,7 +300,7 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
 
     int counter;
 
-    // top left flag
+    // top left thingy
     counter = num_stripes;
     for(int y = 0; y < num_stripes; y++) {
         for(int x = 0; x < counter; x++) {
@@ -317,7 +310,7 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
         counter--;
     }    
 
-    // bottom right flag
+    // bottom right thingy
     counter = 0;
     for(int y = max_y; y > (max_y - num_stripes); y--) {
         for(int x = max_x; x > (max_x - num_stripes + counter); x--) {
@@ -400,6 +393,7 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with pride pattern
 static void draw_bg_pride(Layer *layer, GContext *ctx) {
+    int num_stripes = 7;
     GColor flag_rect[] = {
         GColorPurple,
         GColorPurple,
@@ -429,7 +423,7 @@ static void draw_bg_pride(Layer *layer, GContext *ctx) {
 
     draw_bg_corner(
         PBL_IF_ROUND_ELSE(flag_round, flag_rect),
-        PBL_IF_ROUND_ELSE(14, 7),
+        PBL_IF_ROUND_ELSE(num_stripes + 7, num_stripes),
         layer,
         ctx
     );
