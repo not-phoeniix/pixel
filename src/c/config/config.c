@@ -12,8 +12,9 @@ static void set_defaults() {
     settings.bg_color_1 = PBL_IF_COLOR_ELSE(GColorLightGray, GColorWhite);
     settings.bg_color_2 = GColorDarkGray;
 
-    settings.bg_number = 0;
+    settings.bg_number = 3;
     settings.bar_number = 0;
+    settings.flag_number = 0;
 
     settings.do_bt_buzz = true;
 }

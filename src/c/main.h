@@ -13,16 +13,19 @@ typedef struct ClaySettings {
     GColor bg_color_2;
     int bg_number;
     int bar_number;
+    int flag_number;
     bool do_bt_buzz;
 } ClaySettings;
 
 // PIXEL CANVAS RESOLUTION
 GPoint resolution;
 
+// main object thingies for program
 Window *main_window;
 Layer *bg_layer;
 Layer *bar_layer;
 Layer *time_layer;
 ClaySettings settings;
 
+// updating all layer function
 void update_stuff();

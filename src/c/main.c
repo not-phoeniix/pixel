@@ -11,7 +11,6 @@
 // universal update function ========================================
 
 void update_stuff() {
-    //window_set_background_color(main_window, settings.bg_color);
     window_set_background_color(main_window, settings.bg_color_main);
 
     if(PBL_IS_ROUND && settings.bg_number == 2) {
@@ -43,6 +42,7 @@ static void main_window_load(Window *window) {
     Layer *window_layer = window_get_root_layer(main_window);
     GRect full_bounds = layer_get_bounds(window_layer);
 
+    // main canvas resolution
     resolution = GPoint(
         PBL_IF_ROUND_ELSE(30, 24),
         PBL_IF_ROUND_ELSE(30, 28)
