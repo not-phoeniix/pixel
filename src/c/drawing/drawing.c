@@ -302,32 +302,15 @@ static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
 // bg drawing functions =============================================
 
 /// @brief Draws background with corner-growing pattern, PARENT OF SHINE AND PRIDE
-static void draw_bg_corner(GColor color_array[], Layer *layer, GContext *ctx) {
+static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
     int max_x = resolution.x - 1;
     int max_y = resolution.y - 1;
     int counter;
-    int num_additional_stripes = PBL_IF_ROUND_ELSE(8, 1);
-    size_t num_stripes = sizeof(color_array) / sizeof(color_array[0]);
-
-    // GColor array that holds all colors to be drawn
-    GColor colors[num_stripes + num_additional_stripes];
-
-    // adds additional stripes to format on screen better
-    //   ONLY ADDS THE FIRST COLOR A FEW TIMES
-    for(int i = 0; i < num_additional_stripes; i++) {
-        colors[i] = color_array[i];
-    }
-
-    // adds main color combo for flag, offset to account
-    //   for additional "bump-up" colors in array
-    for(uint i = 0; i < num_stripes; i++) {
-        colors[i + num_additional_stripes] = color_array[i];
-    }
 
     // top left thingy
     counter = num_stripes;
-    for(uint y = 0; y < num_stripes; y++) {
+    for(int y = 0; y < num_stripes; y++) {
         for(int x = 0; x < counter; x++) {
             draw_pixel(x, y, color_array[x + (num_stripes - counter)], bounds, ctx);
         }
@@ -337,8 +320,8 @@ static void draw_bg_corner(GColor color_array[], Layer *layer, GContext *ctx) {
 
     // bottom right thingy
     counter = 0;
-    for(uint y = max_y; y > (max_y - num_stripes); y--) {
-        for(uint x = max_x; x > (max_x - num_stripes + counter); x--) {
+    for(int y = max_y; y > (max_y - num_stripes); y--) {
+        for(int x = max_x; x > (max_x - num_stripes + counter); x--) {
             draw_pixel(x, y, color_array[max_x - x + counter], bounds, ctx);
         }
 
@@ -353,6 +336,15 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_2;
     GColor color3 = settings.bg_color_main;
+
+    GColor colors_main[] = {
+        color2,
+        color1,
+        color3,
+        color3,
+        color2,
+        color1
+    };
 
     GColor colors_rect[] = {
         color2,
@@ -382,6 +374,7 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
 
     draw_bg_corner(
         PBL_IF_ROUND_ELSE(colors_round, colors_rect),
+        6,
         //PBL_IF_ROUND_ELSE(13, 7),
         layer,
         ctx
@@ -394,7 +387,6 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
 
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_main;
-
 
 
     // top grid
@@ -419,11 +411,7 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
 }
 
 /// @brief Draws background with pride pattern
-static void draw_bg_pride(int stripe_colors[], Layer *layer, GContext *ctx) {
-
-    /*
-    // calculates number of things inside current index
-    size_t num_stripes = sizeof(stripe_colors) / sizeof(stripe_colors[0]);
+static void draw_bg_pride(int stripe_colors[], int num_stripes, Layer *layer, GContext *ctx) {
     int num_additional_stripes = PBL_IF_ROUND_ELSE(8, 1);
 
     // GColor array that holds all colors to be drawn
@@ -440,15 +428,12 @@ static void draw_bg_pride(int stripe_colors[], Layer *layer, GContext *ctx) {
     for(int i = 0; i < num_stripes; i++) {
         colors[i + num_additional_stripes] = GColorFromHEX(stripe_colors[i]);
     }
-    */
 
-    
-
-    draw_bg_corner(stripe_colors, layer, ctx);
+    draw_bg_corner(colors, num_stripes + num_additional_stripes, layer, ctx);
 }
 
 /// @brief Draws background with outline pattern
-static void draw_bg_outline(Layer *layer, GContext *ctx) {
+static void draw_bg_outline_rect(Layer *layer, GContext *ctx) {
     GRect bounds = layer_get_bounds(layer);
 
     GColor color = settings.bg_color_1;
@@ -548,14 +533,14 @@ void bg_update_proc(Layer *layer, GContext *ctx) {
             if(PBL_IS_ROUND) {
                 draw_bg_outline_round(layer, ctx);
             } else {
-                draw_bg_outline(layer, ctx);
+                draw_bg_outline_rect(layer, ctx);
             }
 
             break;
 
         // pride bg
         case 3:
-            draw_bg_pride(flag_colors[settings.flag_number], layer, ctx);
+            draw_bg_pride(flag_colors[settings.flag_number], num_stripes[settings.flag_number], layer, ctx);
             break;
 
         // no bg drawn
