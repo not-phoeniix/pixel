@@ -14,7 +14,7 @@ static void set_defaults() {
 
     settings.bg_number = 3;
     settings.bar_number = 0;
-    settings.flag_number = 1;
+    settings.flag_number = 6;
 
     settings.do_bt_buzz = true;
 }

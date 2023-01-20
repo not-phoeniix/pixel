@@ -307,12 +307,33 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
     int max_x = resolution.x - 1;
     int max_y = resolution.y - 1;
     int counter;
+    int num_additional_stripes = PBL_IF_ROUND_ELSE(8, 1);
+    int max_stripes = num_stripes + num_additional_stripes;
+
+    // modifying color array ========================================
+
+    // GColor array that holds all colors to be drawn
+    GColor colors[max_stripes];
+
+    // adds additional stripes to format on screen better
+    //   ONLY ADDS THE FIRST COLOR A FEW TIMES
+    for(int i = 0; i < num_additional_stripes; i++) {
+        colors[i] = color_array[0];
+    }
+
+    // adds main color combo for flag, offset to account
+    //   for additional "bump-up" colors in array
+    for(int i = 0; i < num_stripes; i++) {
+        colors[i + num_additional_stripes] = color_array[i];
+    }
+
+    // drawing the corner thingies ==================================
 
     // top left thingy
-    counter = num_stripes;
-    for(int y = 0; y < num_stripes; y++) {
+    counter = max_stripes;
+    for(int y = 0; y < max_stripes; y++) {
         for(int x = 0; x < counter; x++) {
-            draw_pixel(x, y, color_array[x + (num_stripes - counter)], bounds, ctx);
+            draw_pixel(x, y, colors[x + (max_stripes - counter)], bounds, ctx);
         }
 
         counter--;
@@ -320,9 +341,9 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
 
     // bottom right thingy
     counter = 0;
-    for(int y = max_y; y > (max_y - num_stripes); y--) {
-        for(int x = max_x; x > (max_x - num_stripes + counter); x--) {
-            draw_pixel(x, y, color_array[max_x - x + counter], bounds, ctx);
+    for(int y = max_y; y > (max_y - max_stripes); y--) {
+        for(int x = max_x; x > (max_x - max_stripes+ counter); x--) {
+            draw_pixel(x, y, colors[max_x - x + counter], bounds, ctx);
         }
 
         counter++;
@@ -337,7 +358,7 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
     GColor color2 = settings.bg_color_2;
     GColor color3 = settings.bg_color_main;
 
-    GColor colors_main[] = {
+    GColor colors[] = {
         color2,
         color1,
         color3,
@@ -373,9 +394,10 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
     };
 
     draw_bg_corner(
-        PBL_IF_ROUND_ELSE(colors_round, colors_rect),
-        6,
+        //PBL_IF_ROUND_ELSE(colors_round, colors_rect),
         //PBL_IF_ROUND_ELSE(13, 7),
+        colors,
+        6,
         layer,
         ctx
     );
@@ -412,24 +434,13 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with pride pattern
 static void draw_bg_pride(int stripe_colors[], int num_stripes, Layer *layer, GContext *ctx) {
-    int num_additional_stripes = PBL_IF_ROUND_ELSE(8, 1);
-
-    // GColor array that holds all colors to be drawn
-    GColor colors[num_stripes + num_additional_stripes];
-
-    // adds additional stripes to format on screen better
-    //   ONLY ADDS THE FIRST COLOR A FEW TIMES
-    for(int i = 0; i < num_additional_stripes; i++) {
-        colors[i] = GColorFromHEX(stripe_colors[0]);
-    }
-
-    // adds main color combo for flag, offset to account
-    //   for additional "bump-up" colors in array
+    GColor colors[num_stripes];
+    
     for(int i = 0; i < num_stripes; i++) {
-        colors[i + num_additional_stripes] = GColorFromHEX(stripe_colors[i]);
+        colors[i] = GColorFromHEX(stripe_colors[i]);
     }
 
-    draw_bg_corner(colors, num_stripes + num_additional_stripes, layer, ctx);
+    draw_bg_corner(colors, num_stripes, layer, ctx);
 }
 
 /// @brief Draws background with outline pattern
