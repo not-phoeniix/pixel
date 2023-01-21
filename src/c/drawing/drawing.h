@@ -9,7 +9,7 @@ void update_time();
 /// @param x x coord to draw pixel
 /// @param y y coord to draw pixel
 /// @param color color of pixel
-void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx);
+void draw_pixel(int x, int y, GColor color, Layer* layer, GContext *ctx);
 
 // update function for time layer
 void time_update_proc(Layer *layer, GContext *ctx);

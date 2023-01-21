@@ -29,10 +29,15 @@ void update_time() {
 /// @param y y position to draw (grid-relative)
 /// @param color color of pixel
 /// @param bounds screen bounds
-void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx) {
+void draw_pixel(int x, int y, GColor color, Layer *layer, GContext *ctx) {
+    GRect full_bounds = layer_get_bounds(layer);
+    GRect dyn_bounds = layer_get_unobstructed_bounds(layer);
+
+    int height_diff = full_bounds.size.h - dyn_bounds.size.h;
+
     GPoint screen_res = {
-        .x = bounds.size.w,
-        .y = bounds.size.h
+        .x = full_bounds.size.w,
+        .y = full_bounds.size.h - height_diff
     };
 
     // width and coordinates to draw pixels
@@ -53,7 +58,7 @@ void draw_pixel(int x, int y, GColor color, GRect bounds, GContext *ctx) {
 /// @param x_offset x coordinate (relative to pixel resolution)
 /// @param y_offset y coordinate (relative to pixel resolution)
 /// @param color color to draw
-static void draw_number(int number, int x_offset, int y_offset, GColor color, GRect bounds, GContext *ctx) {
+static void draw_number(int number, int x_offset, int y_offset, GColor color, Layer *layer, GContext *ctx) {
     int *num_array;
 
     switch (number) {
@@ -205,7 +210,7 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
         // draws each pixel in the row, left to right
         for (int w = 0; w < 4; w++) {
             if (num_array[iteration] == 1) {
-                draw_pixel(x_offset + w, y_offset + h, color, bounds, ctx);
+                draw_pixel(x_offset + w, y_offset + h, color, layer, ctx);
             }
 
             iteration++;
@@ -215,12 +220,8 @@ static void draw_number(int number, int x_offset, int y_offset, GColor color, GR
 
 /// @brief Draws the time to the screen
 static void draw_time(Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     // splits hour and min variables into 2 separate
         // integers so they can be displayed separately
-        // w/ the drawing functions
-
     int hour2 = (hour == 0) ? 2 : hour % 10;
     int hour1 = (hour == 0) ? 1 : (hour - hour2) / 10;
     int min2 = min % 10;
@@ -230,16 +231,16 @@ static void draw_time(Layer *layer, GContext *ctx) {
     int y_offset = 11;
 
     // hours
-    draw_number(hour1, x_offset + 1, y_offset, settings.shadow_color, bounds, ctx);
-    draw_number(hour1, x_offset + 0, y_offset, settings.main_color, bounds, ctx);
-    draw_number(hour2, x_offset + 6, y_offset, settings.shadow_color, bounds, ctx);
-    draw_number(hour2, x_offset + 5, y_offset, settings.main_color, bounds, ctx);
+    draw_number(hour1, x_offset + 1, y_offset, settings.shadow_color, layer, ctx);
+    draw_number(hour1, x_offset + 0, y_offset, settings.main_color, layer, ctx);
+    draw_number(hour2, x_offset + 6, y_offset, settings.shadow_color, layer, ctx);
+    draw_number(hour2, x_offset + 5, y_offset, settings.main_color, layer, ctx);
 
     // minutes
-    draw_number(min1, x_offset + 12, y_offset, settings.shadow_color, bounds, ctx);
-    draw_number(min1, x_offset + 11, y_offset, settings.main_color, bounds, ctx);
-    draw_number(min2, x_offset + 17, y_offset, settings.shadow_color, bounds, ctx);
-    draw_number(min2, x_offset + 16, y_offset, settings.main_color, bounds, ctx);
+    draw_number(min1, x_offset + 12, y_offset, settings.shadow_color, layer, ctx);
+    draw_number(min1, x_offset + 11, y_offset, settings.main_color, layer, ctx);
+    draw_number(min2, x_offset + 17, y_offset, settings.shadow_color, layer, ctx);
+    draw_number(min2, x_offset + 16, y_offset, settings.main_color, layer, ctx);
 }
 
 // bar drawing functions ============================================
@@ -248,26 +249,24 @@ static void draw_time(Layer *layer, GContext *ctx) {
 /// @param x x position to draw (grid-relative)
 /// @param y y position to draw (grid-relative)
 static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_2;
 
     for(int i = 0; i < 5; i++) {
-        draw_pixel(x + i, y, color2, bounds, ctx);
+        draw_pixel(x + i, y, color2, layer, ctx);
     }
 
-    draw_pixel(x + 5, y, color1, bounds, ctx);
-    draw_pixel(x + 6, y, color2, bounds, ctx);
+    draw_pixel(x + 5, y, color1, layer, ctx);
+    draw_pixel(x + 6, y, color2, layer, ctx);
 
-    draw_pixel(x + 7, y, color1, bounds, ctx);
-    draw_pixel(x + 8, y, color1, bounds, ctx);
+    draw_pixel(x + 7, y, color1, layer, ctx);
+    draw_pixel(x + 8, y, color1, layer, ctx);
 
-    draw_pixel(x + 9, y, color2, bounds, ctx);
-    draw_pixel(x + 10, y, color1, bounds, ctx);
+    draw_pixel(x + 9, y, color2, layer, ctx);
+    draw_pixel(x + 10, y, color1, layer, ctx);
 
     for(int i = 0; i < 5; i++) {
-        draw_pixel(x + 11 + i, y, color2, bounds, ctx);
+        draw_pixel(x + 11 + i, y, color2, layer, ctx);
     }
 }
 
@@ -275,12 +274,10 @@ static void draw_bar_center(int x, int y, Layer *layer, GContext *ctx) {
 /// @param x x position to draw (grid-relative)
 /// @param y y position to draw (grid-relative)
 static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     GColor color = settings.bg_color_1;
 
     for(int i = 0; i < 16; i++) {
-        draw_pixel(x + i, y, color, bounds, ctx);
+        draw_pixel(x + i, y, color, layer, ctx);
     }
 }
 
@@ -288,14 +285,12 @@ static void draw_bar_solid(int x, int y, Layer *layer, GContext *ctx) {
 /// @param x x position to draw (grid-relative)
 /// @param y y position to draw (grid-relative)
 static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_2;
 
     for(int i = 0; i < 16; i += 2) {
-        draw_pixel(x + i, y, color1, bounds, ctx);
-        draw_pixel(x + 1 + i, y, color2, bounds, ctx);
+        draw_pixel(x + i, y, color1, layer, ctx);
+        draw_pixel(x + 1 + i, y, color2, layer, ctx);
     }
 }
 
@@ -303,7 +298,6 @@ static void draw_bar_dotted(int x, int y, Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with corner-growing pattern, PARENT OF SHINE AND PRIDE
 static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
     int max_x = resolution.x - 1;
     int max_y = resolution.y - 1;
     int counter;
@@ -333,9 +327,10 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
     counter = max_stripes;
     for(int y = 0; y < max_stripes; y++) {
         for(int x = 0; x < counter; x++) {
-            draw_pixel(x, y, colors[x + (max_stripes - counter)], bounds, ctx);
+            draw_pixel(x, y, colors[x + (max_stripes - counter)], layer, ctx);
         }
-
+    GRect bounds = layer_get_bounds(layer);
+    //GRect bounds = layer_get_unobstructed_bounds(layer);
         counter--;
     }    
 
@@ -343,7 +338,7 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
     counter = 0;
     for(int y = max_y; y > (max_y - max_stripes); y--) {
         for(int x = max_x; x > (max_x - max_stripes+ counter); x--) {
-            draw_pixel(x, y, colors[max_x - x + counter], bounds, ctx);
+            draw_pixel(x, y, colors[max_x - x + counter], layer, ctx);
         }
 
         counter++;
@@ -352,8 +347,6 @@ static void draw_bg_corner(GColor color_array[], int num_stripes, Layer *layer, 
 
 /// @brief Draws background with shine pattern
 static void draw_bg_shine(Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_2;
     GColor color3 = settings.bg_color_main;
@@ -379,8 +372,6 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
 
 /// @brief Draws background with grid pattern
 static void draw_bg_grid(Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     GColor color1 = settings.bg_color_1;
     GColor color2 = settings.bg_color_main;
 
@@ -390,8 +381,8 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
         for(int x = 0; x < resolution.x; x += 2) {
             int offset = x + (y % 2);
 
-            draw_pixel(offset, y, color1, bounds, ctx);
-            draw_pixel(offset + 1, y, color2, bounds, ctx);
+            draw_pixel(offset, y, color1, layer, ctx);
+            draw_pixel(offset + 1, y, color2, layer, ctx);
         }
     }
 
@@ -400,8 +391,8 @@ static void draw_bg_grid(Layer *layer, GContext *ctx) {
         for(int x = 0; x < resolution.x; x += 2) {
             int offset = x + (y % 2);
 
-            draw_pixel(offset, y, color1, bounds, ctx);
-            draw_pixel(offset + 1, y, color2, bounds, ctx);
+            draw_pixel(offset, y, color1, layer, ctx);
+            draw_pixel(offset + 1, y, color2, layer, ctx);
         }
     }
 }
@@ -419,28 +410,26 @@ static void draw_bg_pride(int stripe_colors[], int num_stripes, Layer *layer, GC
 
 /// @brief Draws background with outline pattern
 static void draw_bg_outline_rect(Layer *layer, GContext *ctx) {
-    GRect bounds = layer_get_bounds(layer);
-
     GColor color = settings.bg_color_1;
 
     // top edge
     for(int x = 0; x < resolution.x; x++) {
-        draw_pixel(x, 0, color, bounds, ctx);
+        draw_pixel(x, 0, color, layer, ctx);
     }
 
     // bottom edge
     for(int x = 0; x < resolution.x; x++) {
-        draw_pixel(x, resolution.y - 1, color, bounds, ctx);
+        draw_pixel(x, resolution.y - 1, color, layer, ctx);
     }
 
     // left edge
     for(int y = 0; y < resolution.y; y++) {
-        draw_pixel(0, y, color, bounds, ctx);
+        draw_pixel(0, y, color, layer, ctx);
     }
 
     // right edge
     for(int y = 0; y < resolution.y; y++) {
-        draw_pixel(resolution.x - 1, y, color, bounds, ctx);
+        draw_pixel(resolution.x - 1, y, color, layer, ctx);
     }
 }
 
