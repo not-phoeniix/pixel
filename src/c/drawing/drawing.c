@@ -33,17 +33,19 @@ void draw_pixel(int x, int y, GColor color, Layer *layer, GContext *ctx) {
     GRect full_bounds = layer_get_bounds(layer);
     GRect dyn_bounds = layer_get_unobstructed_bounds(layer);
 
-    int height_diff = full_bounds.size.h - dyn_bounds.size.h;
+    int height_diff = (full_bounds.size.h - dyn_bounds.size.h) / 2;
 
     GPoint screen_res = {
         .x = full_bounds.size.w,
-        .y = full_bounds.size.h - height_diff
+        .y = full_bounds.size.h
     };
 
     // width and coordinates to draw pixels
+    //   these are calculated as full res, not 
+    //   small pixel resolution
     int square_width = screen_res.x / resolution.x;
     int x_coord = x * screen_res.x / resolution.x;
-    int y_coord = y * screen_res.y / resolution.y;
+    int y_coord = y * screen_res.y / resolution.y - height_diff;
 
     // final rect to draw
     GRect pixel = GRect(x_coord, y_coord, square_width, square_width);
