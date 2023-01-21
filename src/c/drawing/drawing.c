@@ -367,32 +367,6 @@ static void draw_bg_shine(Layer *layer, GContext *ctx) {
         color1
     };
 
-    GColor colors_rect[] = {
-        color2,
-        color2,
-        color1,
-        color3,
-        color3,
-        color2,
-        color1
-    };
-
-    GColor colors_round[] = {
-        color3,
-        color3,
-        color3,
-        color3,
-        color3,
-        color3,
-        color2,
-        color2,
-        color1,
-        color3,
-        color3,
-        color2,
-        color1
-    };
-
     draw_bg_corner(
         //PBL_IF_ROUND_ELSE(colors_round, colors_rect),
         //PBL_IF_ROUND_ELSE(13, 7),

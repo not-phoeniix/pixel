@@ -35,6 +35,11 @@ static void inbox_recieved_handler(DictionaryIterator *iter, void *ctx) {
         settings.bg_number = atoi(bg_number_t->value->cstring);
     }
 
+    Tuple *flag_number_t = dict_find(iter, MESSAGE_KEY_flag_number);
+    if(flag_number_t) {
+        settings.flag_number = atoi(flag_number_t->value->cstring);
+    }
+
     Tuple *bar_number_t = dict_find(iter, MESSAGE_KEY_bar_number);
     if(bar_number_t) {
         settings.bar_number = atoi(bar_number_t->value->cstring);

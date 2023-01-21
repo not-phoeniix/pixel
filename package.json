@@ -30,6 +30,7 @@
             "bg_color_1",
             "bg_color_2",
             "bg_number",
+            "flag_number",
             "bar_number",
             "do_bt_buzz"
         ],

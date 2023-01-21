@@ -126,6 +126,43 @@
             },
             {
                 "type": "select",
+                "defaultValue": "0",
+                "messageKey": "flag_number",
+                "label": "Pride flag",
+                "capabilities": ["COLOR"],
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "Pride"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Transgender"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Bisexual"
+                    },
+                    {
+                        "value": "3",
+                        "label": "Lesbian"
+                    },
+                    {
+                        "value": "4",
+                        "label": "Pansexual"
+                    },
+                    {
+                        "value": "5",
+                        "label": "Asexual"
+                    },
+                    {
+                        "value": "6",
+                        "label": "Nonbinary"
+                    }
+                ]
+            },
+            {
+                "type": "select",
                 "messageKey": "bar_number",
                 "label": "Bar style",
                 "options": [
