@@ -146,18 +146,13 @@
                         "label": "None"
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "type": "section",
-        "items": [
+            },
             {
                 "type": "select",
                 "defaultValue": "0",
                 "messageKey": "flag_number",
                 "label": "Pride flag",
-                "description": "(Only applicable if pride bg is selected)",
+                "description": "(Only applicable if \"Pride\" background is selected)",
                 "capabilities": ["COLOR"],
                 "options": [
                     {
@@ -189,6 +184,15 @@
                         "label": "Nonbinary"
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "type": "section",
+        "items" : [
+            {
+                "type": "text",
+                "defaultValue": "Enjoy what I make? <a href=\"https://www.buymeacoffee.com/notphoeniix\">Consider donating :)</a>"
             }
         ]
     },
