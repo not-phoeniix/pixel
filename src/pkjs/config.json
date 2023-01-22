@@ -126,9 +126,38 @@
             },
             {
                 "type": "select",
+                "messageKey": "bar_number",
+                "label": "Bar style",
+                "options": [
+                    {
+                        "value": "0",
+                        "label": "Center"
+                    },
+                    {
+                        "value": "1",
+                        "label": "Solid"
+                    },
+                    {
+                        "value": "2",
+                        "label": "Dotted"
+                    },
+                    {
+                        "value": "3",
+                        "label": "None"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "section",
+        "items": [
+            {
+                "type": "select",
                 "defaultValue": "0",
                 "messageKey": "flag_number",
                 "label": "Pride flag",
+                "description": "(Only applicable if pride bg is selected)",
                 "capabilities": ["COLOR"],
                 "options": [
                     {
@@ -158,29 +187,6 @@
                     {
                         "value": "6",
                         "label": "Nonbinary"
-                    }
-                ]
-            },
-            {
-                "type": "select",
-                "messageKey": "bar_number",
-                "label": "Bar style",
-                "options": [
-                    {
-                        "value": "0",
-                        "label": "Center"
-                    },
-                    {
-                        "value": "1",
-                        "label": "Solid"
-                    },
-                    {
-                        "value": "2",
-                        "label": "Dotted"
-                    },
-                    {
-                        "value": "3",
-                        "label": "None"
                     }
                 ]
             }
