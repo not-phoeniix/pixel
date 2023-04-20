@@ -4,8 +4,7 @@
 
 // setting these variables when nothing is stored in persistent storage
 static void set_defaults() {
-    // changable by settings page
-        // DEFAULT OPTIONS:
+    // DEFAULT OPTIONS:
     settings.main_color = GColorWhite;
     settings.shadow_color = PBL_IF_COLOR_ELSE(GColorDarkCandyAppleRed, GColorLightGray);
     settings.bg_color_main = GColorBlack;

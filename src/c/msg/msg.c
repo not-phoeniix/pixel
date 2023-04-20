@@ -58,7 +58,7 @@ void init_msg() {
     app_message_register_inbox_received(inbox_recieved_handler);
 
     // calculates buffer size based on how many tuples there are up there ^^
-    uint32_t buffer_size = dict_calc_buffer_size(8);
+    uint32_t buffer_size = dict_calc_buffer_size(9);
 
     app_message_open(buffer_size, buffer_size);
 }
