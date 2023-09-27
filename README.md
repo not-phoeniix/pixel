@@ -6,11 +6,9 @@ Pixelated watchface for the Rebble Hackathon #001!
  - Several background options
  - Several middle bar options
  - Full color customization (fg, bg, shadow, and 2 accents!)
- - Pride background :)
+ - Pride background :) (with many flag options)
  
 ## Possible future features:
- - Quickview formatting support
- - More pride flags!
  - Battery indicator
  - Date display
  - Animations
