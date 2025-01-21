@@ -188,15 +188,6 @@
         ]
     },
     {
-        "type": "section",
-        "items" : [
-            {
-                "type": "text",
-                "defaultValue": "Enjoy what I make? <a href=\"https://www.buymeacoffee.com/notphoeniix\">Consider donating :)</a>"
-            }
-        ]
-    },
-    {
         "type": "submit",
         "defaultValue": "Save"
     }
